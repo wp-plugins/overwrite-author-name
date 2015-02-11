@@ -220,7 +220,7 @@ class oan_Settings_Additional_Methods {
 									'echo'          => 1,
 									'selected'     => get_option( $option['name'] ),
 									'id'         	=> 'setting-' . $option['name'],
-								//	'option_none_value' => '0', 
+									'option_none_value' => '0', 
 									
 								)); ?>
 			</label>

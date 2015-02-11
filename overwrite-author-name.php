@@ -3,7 +3,7 @@
 Plugin Name: Overwrite Author Name
 Plugin URI: http://justinandco.com/plugins/overwrite-author-name/
 Description: Overwrite Author Name to ensure on publish a users name will be replaced, this allows the site to have a consistent authorship albeit content provided by multiple authors.
-Version: 1.6
+Version: 1.6.0.1
 Author: Justin Fletcher
 Author URI: http://justinandco.com
 License: GPLv2 or later
@@ -87,20 +87,16 @@ class OAN_CLASS {
 	 */
 	function includes() {
 
-		// register 
-		require_once( OAN_PLUGINNAME_PATH . 'includes/register.php' );  
-
 		// settings 
-		//require_once( OAN_PLUGINNAME_PATH . 'includes/settings - Copy.php' ); 
 		require_once( OAN_PLUGINNAME_PATH . 'includes/settings.php' ); 
 	}
 
 	// this function makes all posts published by a single user name as defined on the settings page.
 	public function overwrite_author_name_active_post_types() {
-		
+
 		// this is the username ID to be enforced.
 		$enforced_author = get_option('oan_author_id');  
-	   
+		 
 		if ( $enforced_author ) {
 		
 			// this is the post types to have an enforced user-name.
@@ -113,16 +109,18 @@ class OAN_CLASS {
 						
 					case 'attachment':
 						// edit_attachment hook needed for the attachment post type.
-						add_action( "edit_attachment", 'overwrite_author_name' );
+						add_action( "edit_attachment",  array( $this, 'overwrite_author_name' ) );
+
 						break;
 										
 					default:			
 						// Hook to all private or public post types
-						add_action( 'post_updated', 'overwrite_author_name' );			
+						
+						add_action( 'post_updated', array( $this, 'overwrite_author_name' ) );			
 				}
 			}		
 		}
-		
+
 		load_plugin_textdomain('overwrite-author-text-domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
@@ -131,8 +129,8 @@ class OAN_CLASS {
 	 * is only enforced on 'future', 'publish' or 'private' status.
 	*/
 	public function overwrite_author_name( ) {
-
-		$post_id = get_the_ID();
+	
+		$post_id = get_the_ID( );
 		$post_status = get_post_status( $post_id );
 
 		switch ( $post_status ) {
@@ -147,6 +145,7 @@ class OAN_CLASS {
 			case 'publish':
 			case 'private':
 				// continue
+					
 		}
 
 		// this is the username ID to be enforced.
@@ -156,7 +155,7 @@ class OAN_CLASS {
 		if ( $enforced_author ) {
 
 			// this is the post types to have an enforced username.
-			$author_post_types =  $options[overwrite_post_types];
+			$author_post_types =  get_option('oan_post_types');
 
 			if ($parent_id = wp_is_post_revision( $post_id )) 
 				$post_id = $parent_id;
