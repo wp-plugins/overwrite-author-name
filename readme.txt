@@ -44,4 +44,5 @@ Change log is maintained on [the plugin website]( https://justinandco.com/plugin
 
 
 == Upgrade Notice ==
-
+= 1.6 =
+Check your settings are this upgrade.
