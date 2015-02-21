@@ -3,7 +3,7 @@ Contributors: justinticktock
 Tags: author, enforce, overwrite, publish
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.6.0.1
+Stable tag: 1.6.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
