@@ -3,7 +3,7 @@
 Plugin Name: Overwrite Author Name
 Plugin URI: http://justinandco.com/plugins/overwrite-author-name/
 Description: Overwrite Author Name to ensure on publish a users name will be replaced, this allows the site to have a consistent authorship albeit content provided by multiple authors.
-Version: 1.5
+Version: 1.6.0.2
 Author: Justin Fletcher
 Author URI: http://justinandco.com
 License: GPLv2 or later
@@ -128,9 +128,8 @@ class OAN_CLASS {
 	 * The main philosophy is that draft updates/edits to post types do not enforce the author.  The author 
 	 * is only enforced on 'future', 'publish' or 'private' status.
 	*/
-	public function overwrite_author_name( ) {
+	public function overwrite_author_name( $post_id ) {
 	
-		$post_id = get_the_ID( );
 		$post_status = get_post_status( $post_id );
 
 		switch ( $post_status ) {
